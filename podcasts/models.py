@@ -23,3 +23,18 @@ class ListenStats(models.Model):
     listened_by = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     language = models.CharField(_('Language listened in'), null=True, max_length=5)
     listened_time = models.DateTimeField(_('listened when'), auto_now_add=False, db_index=True)
+
+
+class Language(models.Model):
+    label = models.CharField(_('shorthand_form'), max_length=100)
+    title = models.CharField(_('Full Name'), max_length=50)
+
+    class Meta:
+        verbose_name = 'Language'
+        verbose_name_plural = 'Languages'
+
+
+class EpisodeLanguageMapping(models.Model):
+    language = models.ForeignKey(Language, null=True, on_delete=models.SET_NULL)
+    episode = models.ForeignKey(Episode, null=True, on_delete=models.SET_NULL)
+    link = models.TextField(_('Episode MP3 file link'), blank=True, null=True)

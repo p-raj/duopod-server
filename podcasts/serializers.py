@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from podcasts.models import Subscription, Episode
+from podcasts.models import Subscription, Episode, Language
 
 
 class SubscriptionSerializer(serializers.ModelSerializer):
@@ -19,7 +19,17 @@ class EpisodeSerializer(serializers.ModelSerializer):
     """
 
     """
+    languages = serializers.SerializerMethodField()
+
+    def get_languages(self, instance):
+        return instance.episodelanguagemapping_set.values('language__label', 'link')
 
     class Meta:
         model = Episode
+        fields = '__all__'
+
+
+class LanguagesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Language
         fields = '__all__'

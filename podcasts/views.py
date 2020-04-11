@@ -1,9 +1,9 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
-
-from podcasts.models import Subscription, Episode
-from podcasts.serializers import SubscriptionSerializer, EpisodeSerializer
-
+from rest_framework.views import APIView
+from podcasts.models import Subscription, Episode, Language
+from podcasts.serializers import SubscriptionSerializer, EpisodeSerializer, LanguagesSerializer
+from rest_framework.response import Response
 
 class SubscriptionViewSet(viewsets.ModelViewSet):
     """
@@ -58,3 +58,11 @@ class EpisodeViewSet(viewsets.ModelViewSet):
         subscription = self.kwargs.get('subsId')
         qs = self.model.objects.filter(channel_id= subscription).order_by("-id")
         return qs
+
+
+class LanguagesViewset(viewsets.ReadOnlyModelViewSet):
+    model = Language
+    serializer_class = LanguagesSerializer
+
+    def get_queryset(self):
+        return self.model.objects.all()
