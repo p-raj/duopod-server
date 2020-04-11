@@ -16,3 +16,10 @@ class Episode(models.Model):
     title = models.TextField(_('Episode Title'), blank=True, null=True)
     created_at = models.DateTimeField(_('created at'), null=True, auto_now_add=True)
     duration = models.PositiveIntegerField(_('Episode duration'), null=True)
+
+
+class ListenStats(models.Model):
+    episode = models.ForeignKey(Episode, null=True, on_delete=models.SET_NULL)
+    listened_by = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+    language = models.CharField(_('Language listened in'), null=True, max_length=5)
+    listened_time = models.DateTimeField(_('listened when'), auto_now_add=False, db_index=True)
