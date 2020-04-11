@@ -24,7 +24,9 @@ SECRET_KEY = '_!v60k&(uxm=0@6uakoich_&k(s0(d)igpu^8*014-i!%$7c2+'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '*'
+]
 
 # Application definition
 
@@ -36,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
     'podcasts',
     'users'
 )
