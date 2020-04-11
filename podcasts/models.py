@@ -9,6 +9,7 @@ from django.utils.translation import ugettext_lazy as _
 class Subscription(models.Model):
     name = models.TextField(_('Subscription Name'), blank=True, null=True)
     creator = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+    subscriber = models.ManyToManyField(User, blank=True, related_name='subscribers')
 
 
 class Episode(models.Model):
