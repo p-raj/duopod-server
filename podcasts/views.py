@@ -1,26 +1,8 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
 
-from podcasts.models import Subscription
-from podcasts.serializers import SubscriptionSerializer
-
-
-# class SubscriptionViewSet(viewsets.ReadOnlyModelViewSet):
-#     """Handles Upload Members
-#
-#     """
-#     model = Subscription
-#     pagination_class = LimitOffsetPagination
-#     serializer_class = SubscriptionSerializer
-#
-#     def get_queryset(self):
-#         """
-#
-#         :return: MemberBook Queryset
-#         """
-#
-#         qs = self.model.objects.order_by("-id")
-#         return qs
+from podcasts.models import Subscription, Episode
+from podcasts.serializers import SubscriptionSerializer, EpisodeSerializer
 
 
 class SubscriptionViewSet(viewsets.ModelViewSet):
@@ -47,4 +29,32 @@ class SubscriptionViewSet(viewsets.ModelViewSet):
         """
         """
         qs = self.model.objects.order_by("-id")
+        return qs
+
+
+class EpisodeViewSet(viewsets.ModelViewSet):
+    """
+
+    """
+    model = Episode
+    queryset = Episode.objects.all()
+    serializer_class = EpisodeSerializer
+
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            if self.action == 'retrieve':
+                return EpisodeSerializer
+            else:
+                return EpisodeSerializer
+        else:
+            return EpisodeSerializer
+
+    def get_form_object(self, subsId, pk):
+        return get_object_or_404(Episode, channel_id=subsId, pk=pk)
+
+    def get_queryset(self):
+        """
+        """
+        subscription = self.kwargs.get('subsId')
+        qs = self.model.objects.filter(channel_id= subscription).order_by("-id")
         return qs
