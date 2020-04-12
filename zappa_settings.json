@@ -1,0 +1,11 @@
+{
+    "dev": {
+        "aws_region": "us-east-1",
+        "django_settings": "duopod.settings",
+        "profile_name": "default",
+        "project_name": "pioneer-2020",
+        "runtime": "python3.6",
+        "s3_bucket": "zappa-j0gx0j1y0",
+        "slim_handler": true
+    }
+}
