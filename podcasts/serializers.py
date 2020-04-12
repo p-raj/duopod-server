@@ -22,7 +22,7 @@ class EpisodeSerializer(serializers.ModelSerializer):
     languages = serializers.SerializerMethodField()
 
     def get_languages(self, instance):
-        return instance.episodelanguagemapping_set.values('language__label', 'link', 'converted_title')
+        return instance.episodelanguagemapping_set.values('language__label', 'link', 'converted_title', 'converted_text')
 
     class Meta:
         model = Episode
