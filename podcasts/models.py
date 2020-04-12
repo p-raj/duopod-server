@@ -39,3 +39,4 @@ class EpisodeLanguageMapping(models.Model):
     language = models.ForeignKey(Language, null=True, on_delete=models.SET_NULL)
     episode = models.ForeignKey(Episode, null=True, on_delete=models.SET_NULL)
     link = models.TextField(_('Episode MP3 file link'), blank=True, null=True)
+    converted_title = models.TextField(_('Converted Title'), blank=True, null=True)
