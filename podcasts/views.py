@@ -32,6 +32,34 @@ class SubscriptionViewSet(viewsets.ModelViewSet):
         return qs
 
 
+class UserSubscriptionViewSet(viewsets.ModelViewSet):
+    """
+
+    """
+    model = Subscription
+    queryset = Subscription.objects.all()
+    serializer_class = SubscriptionSerializer
+
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            if self.action == 'retrieve':
+                return SubscriptionSerializer
+            else:
+                return SubscriptionSerializer
+        else:
+            return SubscriptionSerializer
+
+    def get_form_object(self, pk):
+        return get_object_or_404(Subscription, pk=pk)
+
+    def get_queryset(self):
+        """
+        """
+        user = self.kwargs.get('userId')
+        qs = self.model.objects.filter(subscriber=user).order_by("-id")
+        return qs
+
+
 class EpisodeViewSet(viewsets.ModelViewSet):
     """
 
