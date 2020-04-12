@@ -142,7 +142,7 @@ def initiate_translation_request(mapping_id):
     headers = {
         "Content-Type": "application/json",
     }
-    url = "https://24d02028.ngrok.io/start_pipeline"
+    url = "http://18.213.9.178:5000/dev/start_pipeline"
     data = {
         "podcast_url": original_translation.link,
         "podcast_language": original_translation.language.label,
@@ -164,8 +164,8 @@ def initiate_translation_request(mapping_id):
 class RequestTranslationStatus(APIView):
     def get(self, request, episodeId, languageId):
 
-        mapping_exist = EpisodeLanguageMapping.objects.filter(language_id=languageId, episode_id=episodeId).count()
-        if mapping_exist:
+        mapping_exist = EpisodeLanguageMapping.objects.filter(language_id=languageId, episode_id=episodeId)
+        if mapping_exist.count():
             if mapping_exist[0].status == "failed":
                 initiate_translation_request(mapping_exist[0].id)
         else:

@@ -27,7 +27,7 @@ class EpisodeSerializer(serializers.ModelSerializer):
     creator = serializers.SerializerMethodField()
 
     def get_languages(self, instance):
-        return instance.episodelanguagemapping_set.values('language__label', 'link', 'converted_title', 'converted_text', 'status', 'original')
+        return instance.episodelanguagemapping_set.values('language__label', 'link', 'converted_title', 'converted_text', 'status', 'original', 'description')
 
     def get_creator(self, instance):
         return instance.channel.creator.get_full_name()
