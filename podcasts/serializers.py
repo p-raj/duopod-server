@@ -9,6 +9,10 @@ class SubscriptionSerializer(serializers.ModelSerializer):
     """
     name = serializers.ReadOnlyField()
     creator = serializers.ReadOnlyField(source='creator.get_full_name')
+    episodes = serializers.SerializerMethodField()
+
+    def get_episodes(self, instance):
+        return instance.episode_set.count()
 
     class Meta:
         model = Subscription
@@ -20,9 +24,13 @@ class EpisodeSerializer(serializers.ModelSerializer):
 
     """
     languages = serializers.SerializerMethodField()
+    creator = serializers.SerializerMethodField()
 
     def get_languages(self, instance):
-        return instance.episodelanguagemapping_set.values('language__label', 'link', 'converted_title', 'converted_text')
+        return instance.episodelanguagemapping_set.values('language__label', 'link', 'converted_title', 'converted_text', 'status', 'original')
+
+    def get_creator(self, instance):
+        return instance.channel.creator.get_full_name()
 
     class Meta:
         model = Episode

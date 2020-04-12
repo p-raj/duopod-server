@@ -41,3 +41,6 @@ class EpisodeLanguageMapping(models.Model):
     link = models.TextField(_('Episode MP3 file link'), blank=True, null=True)
     converted_title = models.TextField(_('Converted Title'), blank=True, null=True)
     converted_text = models.TextField(_('Converted Text'), blank=True, null=True)
+    status = models.CharField(_('status'), max_length=20, blank=True, null=True)
+    original = models.BooleanField(_('is original Translation'), default=False, null=True)
+    description = models.TextField(_('description'), blank=True, null=True)
